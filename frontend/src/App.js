@@ -6,6 +6,7 @@ import Search from './components/Search';
 import MainContent from './components/MainContent';
 import Users from './components/Users';
 import Behaviors from './components/Behaviors';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 function App() {
   return (
