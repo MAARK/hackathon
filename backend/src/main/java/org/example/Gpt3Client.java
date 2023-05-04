@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -70,14 +70,19 @@ public class Gpt3Client {
             "Brandon,Kim,\"Boston, MA\",over the roll,no,Fashion Faux Pas,today,10% missed,6:45,15:15" +
             "" +
             ">";
+    public static final int API_TIMEOUT = 30;
 
 
     private final OkHttpClient client;
     private final String apiKey;
 
-    public Gpt3Client() {
-        client = new OkHttpClient();
-        apiKey = "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";
+    public Gpt3Client(@Value("${api.key}") String apiKey) {
+        client = new OkHttpClient.Builder()
+                .connectTimeout(API_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(API_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(API_TIMEOUT, TimeUnit.SECONDS)
+                .build();
+        this.apiKey = apiKey != null ? apiKey : "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";
     }
 
     public String generateResponse(String prompt) throws IOException {
@@ -117,6 +122,6 @@ public class Gpt3Client {
             return contentMessage;
         }
 
-        throw new RuntimeException("the GPT response was not Successful");
+        throw new RuntimeException("Error on getting response from AI" );
     }
 }
