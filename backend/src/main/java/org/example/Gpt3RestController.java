@@ -14,7 +14,7 @@ public class Gpt3RestController {
         this.gpt3Client = gpt3Client;
     }
 
-    @PostMapping("/search")
+    @PostMapping(value="/search", produces = "application/json")
     public String search(@RequestBody String message) throws IOException {
         return gpt3Client.generateResponse(message);
     }

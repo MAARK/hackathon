@@ -77,7 +77,7 @@ public class Gpt3Client {
 
     public Gpt3Client() {
         client = new OkHttpClient();
-        apiKey = "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";
+        apiKey = "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";
     }
 
     public String generateResponse(String prompt) throws IOException {
@@ -116,6 +116,7 @@ public class Gpt3Client {
 
             return contentMessage;
         }
+
         throw new RuntimeException("the GPT response was not Successful");
     }
 }
