@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h2 {
+  /* Dashboard */
+
+
+  width: 1140px;
+  height: 56px;
+
+  /* Heading/h1 */
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 56px;
+  /* identical to box height, or 140% */
+
+
+  /* Grayscale/Black */
+
+  color: #121212;
+
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.sidebar {
+  width: 20%;
+  /* Grayscale/Light Gray 3 */
+
+  border-right: 1px solid #E6E6E6;
+  margin: 16px;
+}
+
+.sidebar__nav {
+  background: #F9F9F9;
+}
+
+.main-content {
+  width: 80%;
+}
+
+.main-content {
+  padding: 26px 40px;
+}
+
+.search-bar {
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+
+  width: 60vw;
+  height: 48px;
+
+  /* Grayscale/White */
+
+  background: #FFFFFF;
+  /* Grayscale/Light Gray 3 */
+
+  border: 1px solid #E6E6E6;
+  border-radius: 2px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 3;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.search-button {
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+
+  height: 48px;
+
+  /* Grayscale/White */
+
+  background: #FFFFFF;
+  /* Grayscale/Light Gray 3 */
+
+  border: 1px solid #E6E6E6;
+  border-radius: 2px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 4;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.search-form {
+    display: flex;
+    flex-direction: row;
+}
+
+.search-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    padding: 16px 0;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.search-list-item span {
+  margin-top: 8px;
+}
+
+.sidebar__nav {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar__nav-item {
+  padding: 8px 0;
+}
+
+.sidebar__nav-item a {
+  text-decoration: none;
+  color: #121212;
+}

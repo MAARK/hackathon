@@ -1,0 +1,13 @@
+/* TopNavigation.scss */
+.top-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 30px;
+  color: white;
+}
+
+.top-navigation__title {
+  font-size: 24px;
+}
