@@ -121,7 +121,7 @@ public class Gpt3Client {
 
             return contentMessage;
         }
-        System.out.println("API response" + response);
+        System.out.println("API response: " + response.code() + " " + response.message());
 
         throw new RuntimeException("Error on getting response from AI" );
     }
