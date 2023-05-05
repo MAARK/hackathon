@@ -5,11 +5,17 @@ const Dashboard = () => {
   const [query, setQuery] = useState("");
   const [searchResults, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // Get the current URL context
+  const { protocol, hostname, port } = window.location;
+  // Set the new port number you want to use
+  const newPort = 8080;
+  // Construct the new URL with the modified port
+  const url = `${protocol}//${hostname}:${newPort}/search`;
 
   const handleSubmit = async (query) => {
     setIsLoading(true);
     try {
-      const response = await axios.post("http://localhost:8080/search", {
+      const response = await axios.post(url, {
         query,
       });
       const data = response.data;
