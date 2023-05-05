@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +20,9 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class Gpt3Client {
-    public static final String SYSTEM_DATA = "You are a detective chatbot. " +
-            "Our TD was kidnapped and we have a list of suspects in next CSV table that is wrapped between <> delimiters. The csv columns are: \n" +
+    public static final String SYSTEM_DATA = "You are a detective. " +
+            "Our TD (Sarah Johnson) was kidnapped the list of our first suspects are in next CSV table that is wrapped between <> delimiters. " +
+            "The csv columns are: \n" +
             "Name,Hobby,Workplace,Working Hours,Car,Clothes,Home Address\n " +
             " \n <" +
             "Sarah Johnson,Painting,Google,Mountain View,9am-5pm,Tesla Model S,Business casual,123 Main St, San Francisco, CA 94105\n" +
@@ -42,7 +46,7 @@ public class Gpt3Client {
             "Henry Kim,Cycling,Oracle,Redwood City,9am-5pm,Ford F-150,Casual,500 Oracle Pkwy, Redwood City, CA 94065\n" +
             "Ava Davis,Hiking,REI,Seattle,10am-6pm,Jeep Grand Cherokee,Outdoor gear,222 Yale Ave N, Seattle, WA 98109" +
             ">\n" +
-            "" +
+            "(Please create nice summary, dont respond with tables.)\n" +
             "A List of events where our person was seen last time: \n" +
             "Person's Name,Event Type,Date,Time,Location,Description\n" +
             "Sarah Johnson,Charity Gala,25.04.2023,7pm-10pm,San Francisco Museum of Modern Art,Attended with husband, seen leaving with him at 10pm.\n" +
@@ -134,7 +138,7 @@ public class Gpt3Client {
             messages.add(new ChatMessage("system", SYSTEM_DATA
                     + "\n Do an interview with the user and ask it creative question to check if he knows something about TD kidnapping" +
                     " and check if it know some suspects or is himself suspicious (use his previous responses to get details about suspicious information).\n" +
-                    "  If after 7 questions nothing is interesting he know, tell him 'Thank you'."));
+                    "  If after 7 questions nothing is interesting he know, tell him 'I finished!' ."));
             messages.add(new ChatMessage("assistant", "What is your name ?"));
             messages.add(new ChatMessage("user", userMessage.getUserName()));
 
@@ -144,21 +148,39 @@ public class Gpt3Client {
         String assistantMessage = callChatBot(messages);
         if (assistantMessage != null) {
             messages.add(new ChatMessage("assistant", assistantMessage));
+            //TODO
+//            if (assistantMessage.contains("Thank you!")) {
+//                saveChatToFile(userMessage.getUserName(), messages);
+//            }
         }
          return assistantMessage;
+    }
+
+    private static void saveChatToFile(String userName, List<ChatMessage> messages) throws IOException {
+        Path path = Paths.get(userName + ".txt"); // the path of the file to create
+        // write the text to the file
+        Files.write(path, serializePersonChatMessages(userName, messages).getBytes());
     }
 
     private String serializeInterviewMessages () {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, List<ChatMessage>> entry : userInterviewContexts.entrySet()) {
-            sb.append("Interview of ").append(entry.getKey()).append(":\n");
-            entry.getValue().forEach(chatMessage -> {
-                if (!chatMessage.getRole().equals("system")) {
-                    sb.append("- ").append(chatMessage.getRole()).append(": ").append(chatMessage.getContent()).append("\n");
-                }
-            });
+            String personName = entry.getKey();
+            List<ChatMessage> chatMessages = entry.getValue();
+            sb.append(serializePersonChatMessages(personName, chatMessages));
         }
 
         return sb.append("\n\n\n").toString();
+    }
+
+    private static String serializePersonChatMessages(String personName, List<ChatMessage> chatMessages) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Interview of ").append(personName).append(":\n");
+        chatMessages.forEach(chatMessage -> {
+            if (!chatMessage.getRole().equals("system")) {
+                sb.append("- ").append(chatMessage.getRole()).append(": ").append(chatMessage.getContent()).append("\n");
+            }
+        });
+        return sb.toString();
     }
 }
