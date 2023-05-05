@@ -20,4 +20,9 @@ public class Gpt3RestController {
     public String search(@RequestBody String message) throws IOException {
         return gpt3Client.generateResponse(message);
     }
+
+    @PostMapping(value="/interview", produces = "application/json")
+    public String interview(@RequestBody UserMessage userMessage) throws IOException {
+        return gpt3Client.interview(userMessage);
+    }
 }
