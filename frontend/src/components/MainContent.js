@@ -5,6 +5,7 @@ import Users from './Users';
 import Behaviors from './Behaviors';
 import Integrations from './Integrations';
 import Map from './Map';
+import Interview from "./Interview";
 
 const MainContent = () => {
   return (
@@ -18,6 +19,7 @@ const MainContent = () => {
           <Route path="/behaviors" element={<Behaviors />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/map" element={<Map />} />
+          <Route path="/interview" element={<Interview />} />
         </Routes>
       </BrowserRouter>
     </main>

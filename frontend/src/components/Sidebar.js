@@ -19,6 +19,10 @@ const Sidebar = () => {
         <li className="sidebar__nav-item">
           <a href="/map" activeClassName="sidebar__nav-link--active" className="sidebar__nav-link">Map</a>
         </li>
+
+        <li className="sidebar__nav-item">
+          <a href="/interview" activeClassName="sidebar__nav-link--active" className="sidebar__nav-link">Interview</a>
+        </li>
       </ul>
     </aside>
   );

@@ -12,7 +12,7 @@ h2 {
 
 
   width: 1140px;
-  height: 56px;
+  min-height: 56px;
 
   /* Heading/h1 */
 
@@ -66,7 +66,7 @@ code {
   padding: 26px 40px;
 }
 
-.search-bar {
+.search-bar, .interview-input  {
   box-sizing: border-box;
 
   /* Auto layout */
@@ -96,7 +96,7 @@ code {
   flex-grow: 0;
 }
 
-.search-button {
+.search-button, .interview-send-button {
   box-sizing: border-box;
 
   /* Auto layout */
@@ -123,9 +123,16 @@ code {
   order: 4;
   align-self: stretch;
   flex-grow: 0;
+
+  cursor: pointer;
 }
 
-.search-form {
+.search-button:hover, .interview-send-button:hover {
+  background-color: #0066b3;
+  color: white;
+}
+
+.search-form, .interview-container {
     display: flex;
     flex-direction: row;
 }

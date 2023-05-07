@@ -20,8 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class Gpt3Client {
-    public static final String SYSTEM_DATA = "You are a detective. " +
-            "Our TD (Sarah Johnson) was kidnapped the list of our first suspects are in next CSV table that is wrapped between <> delimiters. " +
+    public static final String SYSTEM_DATA = "You are a detective, your name is Dengel Detector. " +
+            "Our TD (T. Dengel) was kidnapped the list of our first suspects are in next CSV table that is wrapped between <> delimiters. " +
             "The csv columns are: \n" +
             "Name,Hobby,Workplace,Working Hours,Car,Clothes,Home Address\n " +
             " \n <" +
@@ -74,7 +74,7 @@ public class Gpt3Client {
 
     private final OkHttpClient client;
     private final String apiKey;
-    private Map<String, List<ChatMessage>> userInterviewContexts = new HashMap<>();
+    private final Map<String, List<ChatMessage>> userInterviewContexts = new HashMap<>();
 
     public Gpt3Client(@Value("${api.key}") String apiKey) {
         client = new OkHttpClient.Builder()
@@ -82,7 +82,7 @@ public class Gpt3Client {
                 .readTimeout(API_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(API_TIMEOUT, TimeUnit.SECONDS)
                 .build();
-        this.apiKey = apiKey != null ? apiKey : "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";
+        this.apiKey = apiKey;
     }
 
     public String generateResponse(String prompt) throws IOException {
@@ -94,7 +94,7 @@ public class Gpt3Client {
                 new ChatMessage("user", prompt + "\n" +
                         "Format the response in an JSON array where each item has a property 'name' which contains the person name " +
                         "and a property 'description' which contains the a summary answer related to this person. \n" +
-                        "Return only the json without other explanations."));
+                        "Return only the json without other explanations. If the response is too big cut it to have a valid json response."));
 
         return callChatBot(messages);
     }
